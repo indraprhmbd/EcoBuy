@@ -1,4 +1,5 @@
-export const API_BASE_URL = 'http://localhost:8000/api/v1';
+export const API_BASE_URL = '/api/v1';
+
 
 export const fetchClient = async <T>(endpoint: string, options: RequestInit = {}): Promise<T> => {
   const url = `${API_BASE_URL}${endpoint}`;

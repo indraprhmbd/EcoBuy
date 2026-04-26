@@ -8,7 +8,9 @@ export interface Waste {
   lng: number;
   status: string;
   validation_confidence: number;
+  image_url?: string;
 }
+
 
 export interface WasteCreatePayload {
   type: string;

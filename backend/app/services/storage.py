@@ -11,12 +11,12 @@ class StorageService:
     def __init__(self):
         self.s3 = boto3.client(
             's3',
-            aws_access_key_id=settings.S3_ACCESS_KEY,
-            aws_secret_access_key=settings.S3_SECRET_KEY,
+            aws_access_key_id=settings.S3_ACCESS_KEY_ID,
+            aws_secret_access_key=settings.S3_SECRET_ACCESS_KEY,
             region_name=settings.S3_REGION,
-            endpoint_url=settings.S3_ENDPOINT_URL if settings.S3_ENDPOINT_URL else None
+            endpoint_url=settings.S3_ENDPOINT if settings.S3_ENDPOINT else None
         )
-        self.bucket = settings.S3_BUCKET
+        self.bucket = settings.S3_BUCKET_NAME
 
     def upload_file(self, file_data, object_name: str) -> str:
         """Upload a file to an S3 bucket and return the public URL"""
@@ -28,9 +28,10 @@ class StorageService:
                 ContentType='image/jpeg' # Default, should be dynamic
             )
             
-            if settings.S3_ENDPOINT_URL:
-                return f"{settings.S3_ENDPOINT_URL}/{self.bucket}/{object_name}"
+            if settings.S3_ENDPOINT:
+                return f"{settings.S3_ENDPOINT}/{self.bucket}/{object_name}"
             return f"https://{self.bucket}.s3.{settings.S3_REGION}.amazonaws.com/{object_name}"
+
         except ClientError as e:
             logger.error(f"S3 upload failed: {e}")
             raise e

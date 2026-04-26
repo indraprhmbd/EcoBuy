@@ -31,6 +31,8 @@ class WasteListResponse(BaseModel):
     lng: float
     status: str
     validation_confidence: float
+    image_url: Optional[str] = None
+
 
 class RecommendationResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
